@@ -16,7 +16,7 @@ interface NewsApi {
         @Query("apiKey") apiKey: String = API_KEY
     ): NewsResponse
     /*
-     companion object is an object that contains both the base_url and api ke
+     companion object is an object that contains both the base_url and api key
     */
     companion object{
         const val BASE_URL = "https://newsapi.org/v2/"

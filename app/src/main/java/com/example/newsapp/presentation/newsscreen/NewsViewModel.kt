@@ -3,7 +3,6 @@ package com.example.newsapp.presentation.newsscreen
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.newsapp.domain.model.Article
@@ -18,7 +17,11 @@ class NewsViewModel @Inject constructor(
     private val newsRepository: NewsRepository
 ): ViewModel(){
     var articles by mutableStateOf<List<Article>>(emptyList())
+    init {
+        genNewsArticle(category = "general")
+    }
     private fun genNewsArticle(category: String){
+        //making an api call using viewModelScope as coroutine
         viewModelScope.launch {
             val results = newsRepository.getTopHeadline(category = category)
             when(results){
