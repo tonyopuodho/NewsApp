@@ -25,7 +25,9 @@ class NewsViewModel @Inject constructor(
         viewModelScope.launch {
             val results = newsRepository.getTopHeadline(category = category)
             when(results){
-                is Resource.Error<*> -> TODO()
+                is Resource.Error -> {
+
+                }
                 is Resource.Success -> {
                     articles = results.data ?: emptyList()
                 }
