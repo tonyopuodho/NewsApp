@@ -19,5 +19,4 @@ class NewsRepositoryImpl(
             Resource.Error(message = "Failed to fetch news: ${e}")
         }
     }
-
 }
