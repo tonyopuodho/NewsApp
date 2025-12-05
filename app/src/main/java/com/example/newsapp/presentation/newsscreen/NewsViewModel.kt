@@ -17,6 +17,13 @@ class NewsViewModel @Inject constructor(
     private val newsRepository: NewsRepository
 ): ViewModel(){
     var articles by mutableStateOf<List<Article>>(emptyList())
+    var state by mutableStateOf(NewsScreenState())
+    fun onEvent(event: NewsScreenEvent){
+        when(event){
+            is NewsScreenEvent.onCategoryChenged -> TODO()
+            is NewsScreenEvent.onNewsCardClicked -> TODO()
+        }
+    }
     init {
         genNewsArticle(category = "general")
     }
