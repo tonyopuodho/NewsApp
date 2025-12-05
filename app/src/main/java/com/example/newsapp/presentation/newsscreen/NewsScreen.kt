@@ -1,6 +1,7 @@
 package com.example.newsapp.presentation.newsscreen
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,16 +11,17 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.example.newsapp.domain.model.Article
 import com.example.newsapp.presentation.components.CategoryTabRow
 import com.example.newsapp.presentation.components.NewsArticleCard
 import com.example.newsapp.presentation.components.TopBar
@@ -71,21 +73,40 @@ fun NewsScreen(
                 beyondViewportPageCount = categories.size,
                 state = pagerState
             ) {
-                LazyColumn(
-                    verticalArrangement = Arrangement.spacedBy(3.dp),
-                    contentPadding = PaddingValues(1.dp),
-                    modifier = Modifier.padding().padding(top = 2.dp)
-                ) {
-                    items(state.articles){ article ->
-                        NewsArticleCard(
-                            article = article,
-                            onClick = {}
-                        )
-                    }
-                }
+                NewsArticleList(
+                    state = state,
+                    onCardClicked = {}
+                )
             }
         }
 
 
+    }
+}
+
+@Composable
+fun NewsArticleList(
+    state: NewsScreenState,
+    onCardClicked:(Article) -> Unit
+){
+    LazyColumn(
+        verticalArrangement = Arrangement.spacedBy(3.dp),
+        contentPadding = PaddingValues(1.dp),
+        modifier = Modifier.padding().padding(top = 2.dp)
+    ) {
+        items(state.articles){ article ->
+            NewsArticleCard(
+                article = article,
+                onClick = onCardClicked
+            )
+        }
+    }
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ){
+        if (state.isLoading) {
+            CircularProgressIndicator()
+        }
     }
 }
