@@ -5,7 +5,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.example.newsapp.presentation.newsscreen.NewsScreen
+import com.example.newsapp.presentation.newsscreen.NewsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,7 +20,11 @@ class MainActivity : ComponentActivity() {
             )
         )
         setContent {
-            NewsScreen()
+            val viewModel: NewsViewModel = hiltViewModel()
+            NewsScreen(
+                state = viewModel.state,
+                onEvent = viewModel::onEvent
+            )
         }
     }
 }

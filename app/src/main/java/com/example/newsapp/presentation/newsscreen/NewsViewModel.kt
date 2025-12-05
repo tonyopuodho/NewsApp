@@ -18,9 +18,13 @@ class NewsViewModel @Inject constructor(
 ): ViewModel(){
     var articles by mutableStateOf<List<Article>>(emptyList())
     var state by mutableStateOf(NewsScreenState())
+
     fun onEvent(event: NewsScreenEvent){
         when(event){
-            is NewsScreenEvent.onCategoryChenged -> TODO()
+            is NewsScreenEvent.onCategoryChenged -> {
+                state = state.copy(category = event.category)
+                genNewsArticle(category = state.category)
+            }
             is NewsScreenEvent.onNewsCardClicked -> TODO()
         }
     }
@@ -30,13 +34,17 @@ class NewsViewModel @Inject constructor(
     private fun genNewsArticle(category: String){
         //making an api call using viewModelScope as coroutine
         viewModelScope.launch {
+            state = state.copy(isLoading = true)
             val results = newsRepository.getTopHeadline(category = category)
             when(results){
                 is Resource.Error -> {
 
                 }
                 is Resource.Success -> {
-                    articles = results.data ?: emptyList()
+                    state = state.copy(
+                        articles = results.data ?: emptyList(),
+                        isLoading = false
+                    )
                 }
             }
         }

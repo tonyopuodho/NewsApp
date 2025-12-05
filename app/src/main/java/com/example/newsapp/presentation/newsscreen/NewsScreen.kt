@@ -76,7 +76,7 @@ fun NewsScreen(
                     contentPadding = PaddingValues(1.dp),
                     modifier = Modifier.padding().padding(top = 2.dp)
                 ) {
-                    items(state.article){ article ->
+                    items(state.articles){ article ->
                         NewsArticleCard(
                             article = article,
                             onClick = {}
