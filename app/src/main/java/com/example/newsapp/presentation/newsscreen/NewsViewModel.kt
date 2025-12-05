@@ -38,12 +38,17 @@ class NewsViewModel @Inject constructor(
             val results = newsRepository.getTopHeadline(category = category)
             when(results){
                 is Resource.Error -> {
-
+                    state = state.copy(
+                        error = results.message,
+                        isLoading = false,
+                        articles = emptyList()
+                    )
                 }
                 is Resource.Success -> {
                     state = state.copy(
                         articles = results.data ?: emptyList(),
-                        isLoading = false
+                        isLoading = false,
+                        error = null
                     )
                 }
             }

@@ -15,9 +15,9 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun RetryScreen(
-    modifier: Modifier = Modifier,
+   error: String,
     onRetry: () -> Unit,
-    error: String
+    modifier: Modifier = Modifier
 ){
     Column(
         modifier = modifier

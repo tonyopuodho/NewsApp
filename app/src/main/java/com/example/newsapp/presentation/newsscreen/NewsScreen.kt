@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import com.example.newsapp.domain.model.Article
 import com.example.newsapp.presentation.components.CategoryTabRow
 import com.example.newsapp.presentation.components.NewsArticleCard
+import com.example.newsapp.presentation.components.RetryScreen
 import com.example.newsapp.presentation.components.TopBar
 import kotlinx.coroutines.launch
 
@@ -75,7 +76,10 @@ fun NewsScreen(
             ) {
                 NewsArticleList(
                     state = state,
-                    onCardClicked = {}
+                    onCardClicked = {},
+                    onRetry = {
+                        onEvent(NewsScreenEvent.onCategoryChenged(state.category))
+                    }
                 )
             }
         }
@@ -87,7 +91,8 @@ fun NewsScreen(
 @Composable
 fun NewsArticleList(
     state: NewsScreenState,
-    onCardClicked:(Article) -> Unit
+    onCardClicked:(Article) -> Unit,
+    onRetry: () -> Unit
 ){
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(3.dp),
@@ -107,6 +112,12 @@ fun NewsArticleList(
     ){
         if (state.isLoading) {
             CircularProgressIndicator()
+        }
+        if (state.error != null) {
+            RetryScreen(
+                error = state.error,
+                onRetry = onRetry
+            )
         }
     }
 }
