@@ -30,6 +30,6 @@ fun ImageHolder(
         contentScale = ContentScale.Crop,
         modifier = modifier.fillMaxWidth().height(150.dp),
         placeholder = painterResource(R.drawable.ic_launcher_foreground),
-        error = painterResource(R.drawable.ic_launcher_foreground)
+        error = painterResource(R.drawable.logo)
     )
 }
