@@ -25,7 +25,9 @@ class NewsViewModel @Inject constructor(
                 state = state.copy(category = event.category)
                 genNewsArticle(category = state.category)
             }
-            is NewsScreenEvent.onNewsCardClicked -> TODO()
+            is NewsScreenEvent.onNewsCardClicked -> {
+                state = state.copy(selectedArticle = event.article)
+            }
         }
     }
     init {
