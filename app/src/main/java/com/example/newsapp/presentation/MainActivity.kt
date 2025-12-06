@@ -9,7 +9,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
 import com.example.newsapp.presentation.newsscreen.NewsScreen
 import com.example.newsapp.presentation.newsscreen.NewsViewModel
-import com.example.newsapp.util.Navigation
+import com.example.newsapp.util.NavigationController
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,7 +23,8 @@ class MainActivity : ComponentActivity() {
         )
         setContent {
             val navController = rememberNavController()
-            Navigation(navController = navController)
+            NavigationController(navController = navController)
+
         }
     }
 }

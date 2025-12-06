@@ -40,7 +40,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun NewsScreen(
     state: NewsScreenState,
-    onEvent: (NewsScreenEvent) -> Unit
+    onEvent: (NewsScreenEvent) -> Unit,
+    onReadFullStory:(String) -> Unit
 ){
     /**
      * using scaffold to place topbar navigation and bottom bar navigation
@@ -64,6 +65,7 @@ fun NewsScreen(
                     BottomSheetNav(
                         article = it,
                         onReadFullStory = {
+                            onReadFullStory(it.url)
                             coroutineScope.launch {sheetState.hide()} .invokeOnCompletion {
                                 if (!sheetState.isVisible) shouldBottomSheetShow = false
                             }
