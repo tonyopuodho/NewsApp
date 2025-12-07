@@ -11,8 +11,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -26,14 +30,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.newsapp.domain.model.Article
 import com.example.newsapp.presentation.components.BottomSheetNav
 import com.example.newsapp.presentation.components.CategoryTabRow
 import com.example.newsapp.presentation.components.NewsArticleCard
 import com.example.newsapp.presentation.components.RetryScreen
 import com.example.newsapp.presentation.components.TopBar
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -41,7 +46,8 @@ import kotlinx.coroutines.launch
 fun NewsScreen(
     state: NewsScreenState,
     onEvent: (NewsScreenEvent) -> Unit,
-    onReadFullStory:(String) -> Unit
+    onReadFullStory:(String) -> Unit,
+    navHostController: NavHostController
 ){
     /**
      * using scaffold to place topbar navigation and bottom bar navigation
@@ -91,6 +97,14 @@ fun NewsScreen(
                 onMoverTClick = {}
             )
         },
+        floatingActionButton = {
+            FloatingActionButton(onClick = {
+                navHostController.navigate(route = "favorite_screen")
+            }, contentColor = Color.White, containerColor = Color.Red) {
+                Icon(imageVector = Icons.Default.Favorite, contentDescription = "icon")
+            }
+        }
+
     ) {innerPadding ->
         Column(
             modifier = Modifier.fillMaxWidth().padding(innerPadding)

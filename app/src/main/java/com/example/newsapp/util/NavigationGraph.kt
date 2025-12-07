@@ -10,6 +10,7 @@ import androidx.navigation.navArgument
 import com.example.newsapp.presentation.newsscreen.NewsScreen
 import com.example.newsapp.presentation.newsscreen.NewsViewModel
 import com.example.newsapp.presentation.secondscreen.ArticleScreen
+import com.example.newsapp.presentation.secondscreen.FavoriteScreen
 
 @Composable
 fun NavigationController(
@@ -27,7 +28,8 @@ fun NavigationController(
                 onEvent = viewModel::onEvent,
                 onReadFullStory = {url ->
                     navController.navigate(route = "article_screen?$argKey=$url")
-                }
+                },
+                navHostController = navController
             )
         }
         composable(
@@ -39,6 +41,11 @@ fun NavigationController(
             ArticleScreen(
                 url = backEntry.arguments?.getString(argKey),
                 onBackPress = { navController.navigateUp() }
+            )
+        }
+        composable(route = "favorite_screen") {
+            FavoriteScreen(
+                onBackPress = {navController.navigateUp()}
             )
         }
     }
